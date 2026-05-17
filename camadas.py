@@ -5,10 +5,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.widgets import Button
 
-
-
 # ENCONTRAR SÉRIES
-
 
 ROOT = r"C:\LIDC"
 
@@ -30,10 +27,7 @@ for raiz, dirs, arquivos in os.walk(ROOT):
 
 print(f"\nTotal de séries: {len(series_encontradas)}")
 
-
-
 # ESCOLHER PACIENTE
-
 
 indice_paciente = 0
 
@@ -42,11 +36,8 @@ path = series_encontradas[indice_paciente]["path"]
 print("\nPaciente selecionado:")
 print(path)
 
-
-
 # CARREGAR DICOM
 
-# tessnjbdhasnknas vjc
 slices = []
 
 arquivos = [
@@ -70,10 +61,7 @@ for arquivo in arquivos:
 
 print(f"\nSlices carregados: {len(slices)}")
 
-
-
 # ORDENAÇÃO SEGURA
-
 
 def chave(ds):
 
@@ -88,13 +76,9 @@ def chave(ds):
 
     return 0
 
-
 slices.sort(key=chave)
 
-
-
 # CONVERSÃO PARA HU
-
 
 def converter_para_hu(slices):
 
@@ -123,11 +107,7 @@ volume_hu = converter_para_hu(slices)
 
 print("\nVolume:", volume_hu.shape)
 
-
-
 # INTERVALOS DE HU
-
-
 """
 Faixas aproximadas usadas na radiologia
 """
