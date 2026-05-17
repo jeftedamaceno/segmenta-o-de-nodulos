@@ -8,7 +8,6 @@ def listar_arquivos_e_pastas(caminho):
         for pasta in pastas:
             print(f"   📁 Pasta: {pasta}")
 
-        # Lista os arquivos
         for arquivo in arquivos:
             print(f"   📄 Arquivo: {arquivo}")
 
