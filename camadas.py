@@ -46,7 +46,7 @@ print(path)
 
 # CARREGAR DICOM
 
-
+# tessnjbdhasnknas vjc
 slices = []
 
 arquivos = [
