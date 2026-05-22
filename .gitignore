@@ -28,3 +28,6 @@ dist/
 
 # Jupyter
 .ipynb_checkpoints/
+
+/padrao ouro/
+/olde version/
