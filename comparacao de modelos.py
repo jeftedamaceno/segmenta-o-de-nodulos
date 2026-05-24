@@ -21,7 +21,7 @@ ROOT = r"C:\exames_dos_pacientes"
 
 PACIENTE = "LIDC-IDRI-0068"
 
-XML_PATH = r"C:\Users\jefte\Downloads\padrao ouro\tcia-lidc-xml\189\068.xml"
+XML_PATH = r"C:\Users\jefte\Downloads\padrao ouro\tcia-lidc-xml\188\068.xml"
 
 
 

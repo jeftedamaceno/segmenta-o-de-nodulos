@@ -11,7 +11,8 @@ import pyvista as pv
 
 
 ROOT = r"C:\exames_dos_pacientes"
-PACIENTE = "LIDC-IDRI-0068"
+# melhores pacientes para teste: 0088, 0118
+PACIENTE = "LIDC-IDRI-0118"
 
 
 # ==========================================
@@ -259,11 +260,11 @@ mesh_nodulos = criar_mesh(
 
 plotter = pv.Plotter()
 
-# pulmão transparente
+# pulmão transparente para destacar os nódulos
 plotter.add_mesh(
     mesh_pulmao,
     color="lightblue",
-    opacity=0.08
+    opacity=0.1
 )
 
 # nódulos destacados
@@ -275,3 +276,47 @@ plotter.add_mesh(
 plotter.set_background("black")
 
 plotter.show()
+
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+
+slice_id = 80
+
+fig, ax = plt.subplots(1,2, figsize=(10,5))
+plt.subplots_adjust(bottom=0.25)
+
+img1 = ax[0].imshow(volume_hu[slice_id], cmap='gray')
+img2 = ax[1].imshow(volume_hu[slice_id], cmap='gray')
+
+overlay = ax[1].imshow(
+    mascara_nodulos[slice_id],
+    cmap='autumn',
+    alpha=0.5
+)
+
+ax_slider = plt.axes([0.2, 0.1, 0.6, 0.03])
+
+slider = Slider(
+    ax_slider,
+    'Slice',
+    0,
+    volume_hu.shape[0]-1,
+    valinit=slice_id,
+    valstep=1
+)
+
+def update(val):
+
+    s = int(slider.val)
+
+    img1.set_data(volume_hu[s])
+
+    img2.set_data(volume_hu[s])
+
+    overlay.set_data(mascara_nodulos[s])
+
+    fig.canvas.draw_idle()
+
+slider.on_changed(update)
+
+plt.show()
