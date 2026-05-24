@@ -18,7 +18,7 @@ import pyvista as pv
 # 0100, 0091
 # geometricamente parecidos mais fora do pumao 0088
 ROOT = r"C:\exames_dos_pacientes"
-PACIENTE = "LIDC-IDRI-0068"
+PACIENTE = "LIDC-IDRI-0088"
 
 
 # =========================================================

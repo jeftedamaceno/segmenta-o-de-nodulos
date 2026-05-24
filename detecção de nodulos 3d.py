@@ -12,7 +12,7 @@ import pyvista as pv
 
 ROOT = r"C:\exames_dos_pacientes"
 # melhores pacientes para teste: 0088, 0118
-PACIENTE = "LIDC-IDRI-0118"
+PACIENTE = "LIDC-IDRI-0088"
 
 
 # ==========================================
