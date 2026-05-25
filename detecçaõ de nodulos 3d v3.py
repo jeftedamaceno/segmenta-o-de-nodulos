@@ -14,12 +14,8 @@ from skimage.draw import polygon
 
 import pyvista as pv
 
-# Importa o seu arquivo de funções recorrentes
 import utils
 
-# =========================================================
-# CONFIGURAÇÕES
-# =========================================================
 
 ROOT = r"C:\exames_dos_pacientes"
 XML_ROOT = r"C:\Users\jefte\Downloads\padrao ouro\tcia-lidc-xml"
@@ -28,9 +24,6 @@ PACIENTE = "LIDC-IDRI-0164"
 MOSTRAR_SLICE = True
 MOSTRAR_3D = True
 
-# =========================================================
-# CAMINHO PACIENTE E CARREGAMENTO DICOM VIA UTILS
-# =========================================================
 
 serie_path = os.path.join(ROOT, PACIENTE)
 
@@ -43,9 +36,6 @@ print(serie_path)
 slices = utils.carregar_slices(serie_path)
 print(f"\nSlices carregadas: {len(slices)}")
 
-# =========================================================
-# UID DA SÉRIE E BUSCA DO XML
-# =========================================================
 
 SERIES_UID = slices[0].SeriesInstanceUID
 print("\nSeries UID:")
@@ -72,19 +62,12 @@ for raiz, dirs, arquivos in os.walk(XML_ROOT):
 print("\nXML encontrado:")
 print(xml_encontrado)
 
-# =========================================================
-# PROCESSAMENTO DE INTENSIDADE VIA UTILS (HU + WINDOW)
-# =========================================================
 
 volume_hu = utils.converter_para_hu(slices)
 print("\nVolume:")
 print(volume_hu.shape)
 
 volume_window = utils.aplicar_window(volume_hu)
-
-# =========================================================
-# GAUSSIAN BLUR E SEGMENTAÇÃO PULMONAR
-# =========================================================
 
 volume_suave = gaussian_filter(volume_window, sigma=1)
 
@@ -105,9 +88,9 @@ mascara_pulmao = morphology.binary_dilation(mascara_pulmao, morphology.ball(2))
 volume_roi = volume_suave.copy()
 volume_roi[~mascara_pulmao] = -1000
 
-# =========================================================
+
 # SEGMENTAÇÃO DOS NÓDULOS (Limiar + Morfologia + Watershed)
-# =========================================================
+
 
 mascara_nodulos = np.logical_and(volume_roi > -250, volume_roi < 150)
 mascara_nodulos = morphology.binary_closing(mascara_nodulos, morphology.ball(1))
@@ -123,9 +106,7 @@ mask[tuple(coords.T)] = True
 markers, _ = ndimage.label(mask)
 labels_ws = watershed(-distance, markers, mask=mascara_nodulos)
 
-# =========================================================
 # FILTRAGEM GEOMÉTRICA DO WATERSHED
-# =========================================================
 
 mascara_final = np.zeros_like(mascara_nodulos, dtype=bool)
 props = measure.regionprops(labels_ws)
@@ -209,9 +190,6 @@ if xml_encontrado is not None:
         except:
             pass
 
-# =========================================================
-# VISUALIZAÇÃO SLICE
-# =========================================================
 
 if MOSTRAR_SLICE:
     slice_id = volume_hu.shape[0] // 2
@@ -236,25 +214,15 @@ if MOSTRAR_SLICE:
 
     plt.show()
 
-# =========================================================
-# MÉTRICA DICE
-# =========================================================
 
 inter = np.logical_and(mascara_final, mascara_gold).sum()
 dice = (2 * inter) / (mascara_final.sum() + mascara_gold.sum() + 1e-8)
 print(f"\nDice coefficient: {dice:.4f}")
 
-# =========================================================
-# GERAR MALHA 3D USANDO AS FUNÇÕES DO UTILS
-# =========================================================
-
 mesh_pulmao = utils.criar_mesh(mascara_pulmao.astype(np.uint8))
 mesh_nodulos = utils.criar_mesh(mascara_final.astype(np.uint8))
 mesh_gold = utils.criar_mesh(mascara_gold.astype(np.uint8))
 
-# =========================================================
-# VISUALIZAÇÃO 3D
-# =========================================================
 
 if MOSTRAR_3D:
     plotter = pv.Plotter()
@@ -266,7 +234,7 @@ if MOSTRAR_3D:
         plotter.add_mesh(mesh_nodulos, color="red")
 
     if mesh_gold is not None:
-        plotter.add_mesh(mesh_gold, color="green", opacity=0.8)
+        plotter.add_mesh(mesh_gold, color="green")
 
     plotter.set_background("black")
     plotter.show()

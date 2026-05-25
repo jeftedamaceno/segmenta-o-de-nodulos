@@ -8,7 +8,7 @@ import pyvista as pv
 
 import utils
 
-PACIENTE_PATH = r"C:\exames_dos_pacientes\LIDC-IDRI-0068"
+PACIENTE_PATH = r"C:\exames_dos_pacientes\LIDC-IDRI-0164"
 XML_PATH = r'C:\Users\jefte\projetos em python\ufc 2025 a 2026\segmentação de nodulos\padrao ouro\tcia-lidc-xml\189\068.xml'
 
 def criar_mascara_padrao_ouro(xml_path, shape, uid_to_index):
@@ -43,7 +43,7 @@ volume, slices = utils.carregar_dicom_recursivo(PACIENTE_PATH)
 uid_to_index = {s.SOPInstanceUID: i for i, s in enumerate(slices)}
 hu = utils.converter_para_hu(slices)
 
-mascara_usuario = np.load("mascara_test v3.npy").astype(np.uint8)
+mascara_usuario = np.load("mascara_com vasus.npy").astype(np.uint8)
 # mascara_usuario = np.load("mascara_test.npy").astype(np.uint8)
 mascara_gt = criar_mascara_padrao_ouro(XML_PATH, hu.shape, uid_to_index)
 
