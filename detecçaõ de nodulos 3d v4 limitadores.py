@@ -11,8 +11,8 @@ import utils
 ROOT = r"C:\exames_dos_pacientes"
 # PACIENTE = "LIDC-IDRI-0068"
 PACIENTE = "LIDC-IDRI-0164"
-EXIBIR_PULMAO_OPACO = True    # Se True, renderiza a casca do pulmão em azul translúcido
-EXIBIR_APENAS_MASCARA = False  # Se True, esconde o pulmão para focar só nos nódulos em vermelho
+EXIBIR_PULMAO_OPACO = True   
+EXIBIR_APENAS_MASCARA = False  
 
 MIN_VOLUME = 20          
 MAX_VOLUME = 4000
@@ -38,9 +38,7 @@ def calcular_magnitude_gradiente_3d(volume):
     s_x = sobel(volume, axis=2)
     return np.sqrt(s_z**2 + s_y**2 + s_x**2)
 
-# =========================================================
 # CRESCIMENTO DE REGIÕES CONDICIONAL RESTRITO
-# =========================================================
 def crescimento_regioes_condicional(mascara_nodulos, mapa_gradiente):
     mapa_dist = ndimage.distance_transform_edt(mascara_nodulos)
     from skimage.feature import peak_local_max

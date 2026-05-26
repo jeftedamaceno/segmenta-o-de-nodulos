@@ -8,7 +8,7 @@ import pyvista as pv
 
 import utils
 
-PACIENTE_PATH = r"C:\exames_dos_pacientes\LIDC-IDRI-0164"
+PACIENTE_PATH = r"C:\exames_dos_pacientes\LIDC-IDRI-0068"
 XML_PATH = r'C:\Users\jefte\projetos em python\ufc 2025 a 2026\segmentação de nodulos\padrao ouro\tcia-lidc-xml\189\068.xml'
 
 def criar_mascara_padrao_ouro(xml_path, shape, uid_to_index):

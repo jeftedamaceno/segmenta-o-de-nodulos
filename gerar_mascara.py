@@ -15,14 +15,7 @@ import utils
 ROOT = r"C:\exames_dos_pacientes"
 PACIENTE = "LIDC-IDRI-0068"  # ID do paciente de teste
 
-# # Parâmetros Geométricos Otimizados (Mais tolerantes para não excluir nódulos fracos)
-# MIN_VOLUME = 20          # Permite nódulos menores
-# MAX_VOLUME = 4000
-# MIN_ESFERICIDADE = 0.3   # Mais tolerante a nódulos ovais ou justavasculares
-# MAX_RAZAO = 3.5          # Não tão rígido, evita descartar nódulos alongados
-# MAX_SLICES = 15
-# MAX_DIAMETRO_MM = 35
-# Parâmetros Geométricos Otimizados (Mais tolerantes para não excluir nódulos fracos)
+
 MIN_VOLUME = 20          # Permite nódulos menores
 MAX_VOLUME = 4000
 MIN_ESFERICIDADE = 0.1   # Mais tolerante a nódulos ovais ou justavasculares
